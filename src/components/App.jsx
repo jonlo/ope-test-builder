@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getQuestions } from "../data/questions";
+import { Question } from "./Question";
 
 export default function App() {
   const [count, setCount] = useState(0);
@@ -9,6 +10,7 @@ export default function App() {
   useEffect(() => {
     setQuestions(getQuestions());
   }, []);
+  
   const handleAnswerButtonClick = (answer) => {
     return () => {
       if (currentQuestion < questions.length - 1) {
@@ -25,57 +27,11 @@ export default function App() {
 
   if (questions.length !== 0) {
     return (
-      <div className="max-w-xl rounded overflow-hidden shadow-lg">
-        <div className="px-6 py-4">
-          <h1 className="mb-2 text-2xl text-yellow-700">
-            {currentQuestion}) {questions[currentQuestion].question}
-          </h1>
-        </div>
-        <div className="px-6 pt-4 pb-2">
-          <ul>
-            <li className="p-2">
-              <p
-                className="text-gray-700 text-base cursor-pointer"
-                onClick={handleAnswerButtonClick(
-                  questions[currentQuestion].answers[0]
-                )}
-              >
-                a) {questions[currentQuestion].answers[0].answer}
-              </p>
-            </li>
-            <li className="p-2">
-              <p
-                className="text-gray-700 text-base cursor-pointer"
-                onClick={handleAnswerButtonClick(
-                  questions[currentQuestion].answers[1]
-                )}
-              >
-                b) {questions[currentQuestion].answers[1].answer}
-              </p>
-            </li>
-            <li className="p-2">
-              <p
-                className="text-gray-700 text-base cursor-pointer"
-                onClick={handleAnswerButtonClick(
-                  questions[currentQuestion].answers[2]
-                )}
-              >
-                c) {questions[currentQuestion].answers[2].answer}
-              </p>
-            </li>
-            <li className="p-2">
-              <p
-                className="text-gray-700 text-base cursor-pointer"
-                onClick={handleAnswerButtonClick(
-                  questions[currentQuestion].answers[3]
-                )}
-              >
-                d) {questions[currentQuestion].answers[3].answer}
-              </p>
-            </li>
-          </ul>
-        </div>
-      </div>
+      <Question
+        question={questions[currentQuestion]}
+        handleAnswerButtonClick={handleAnswerButtonClick}
+        currentQuestionIndex={currentQuestion + 1}
+      />
     );
   }
   return <div>Loading...</div>;
